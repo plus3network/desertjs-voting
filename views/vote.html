@@ -1,0 +1,74 @@
+<html>
+	<head>
+	    <!-- Le styles -->
+	    <link href="/public/css/bootstrap.css" rel="stylesheet">
+      <link href="/public/css/bootstrap-responsive.css" rel="stylesheet">
+
+      <!-- Le Javascript -->
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+      <script src="/public/js/bootstrap.js" ></script>
+
+    <script>
+      //var teams = [{name: 'Team 1'}, {name: 'Team 2'}, {name: 'Team 3'}];
+
+      function vote(){
+
+        var form = {};
+          form.first  = $('#first').val();
+          form.second = $('#second').val();
+          form.third  = $('#third').val();
+        
+        console.log(form);
+
+      }
+
+    </script>
+  </head>
+	<body>
+
+
+    <div class="control-group">
+      <label class="control-label" for="third"><h2>Your Name:</h2></label>
+      <div class="controls">
+        <input type="text" class="input" value="" placeholder="Your Name" />
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="first"><h2>1st Place</h2></label>
+      <div class="controls">
+        <select name="first_place" id="first" class="span3 teams_select">
+          <option>Team 1</option>
+          <option>Team 2</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="second"><h2>2nd Place</h2></label>
+      <div class="controls">
+        <select name="second_place" id="second" class="span3 teams_select">
+          <option>Team 1</option>
+          <option>Team 2</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="third"><h2>3rd Place</h2></label>
+      <div class="controls">
+        <select name="third_place" id="third" class="span3 teams_select">
+          <option>Team 1</option>
+          <option>Team 2</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary btn-large" onclick="vote();">VOTE !</button>
+      </div>
+    </div>
+
+	</body>
+</html>
