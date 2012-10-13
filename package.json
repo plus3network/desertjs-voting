@@ -10,6 +10,7 @@
     "hjs": "*",
     "less-middleware": "*",
     "async": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "redis": "*"
   }
 }
