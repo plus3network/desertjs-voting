@@ -1,5 +1,6 @@
 var async    = require('async');
 var redis    = require('redis').createClient();
+var _        = require('underscore');
 
 module.exports.vote = function (name, first, second, third, callback) {
   redis.get(name+':voted', function (err, reply) {
@@ -26,7 +27,7 @@ module.exports.vote = function (name, first, second, third, callback) {
     });
 };
 
-module.exports.joinEveryOther = function (value) {
+var joinEveryOther = module.exports.joinEveryOther = function (value) {
   var results = [];
   var i = 0;
   while (i < value.length) {
@@ -45,5 +46,15 @@ module.exports.getTeams = function (callback) {
 };
 
 module.exports.getScores = function (callback) {
-  redis.zrevrange('results', 0, -1, 'WITHSCORES', callback);
+  redis.zrevrange('results', 0, -1, 'WITHSCORES', function (err, results) {
+    if(err) { return callback(err); }
+
+    var total = _.reduce(joinEveryOther(results), function (memo, row) {
+      return memo + parseInt(row[1]);
+    }, 0);
+
+    callback(null, _.map(joinEveryOther(results), function (row) {
+      return { name: row[0], score: (parseInt(row[1])/total)*100 };
+    }));
+  });
 };
