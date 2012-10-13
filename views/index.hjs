@@ -5,191 +5,191 @@
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">    
     <link rel='stylesheet' href='/css/style.css' />
- 
   </head>
   <body>
     <h1>Desert JS Voting System</h1>
-  </body>
-
-  <div id="vote-form-container"></div>
-
-  <div id="results-container"></div>
-
-  <script id="vote-form-template" type="text/plain">
     
-    <div id="vote-form">
+    <div id="vote-form-container"></div>
 
-      <div class="control-group">
-        <label class="control-label" for="third"><h2>Your Name:</h2></label>
-        <div class="controls">
-          <input type="text" class="input" name="votername" id="votername" value="" placeholder="Your Name" />
+    <div id="results-container"></div>
+
+    <script id="vote-form-template" type="text/plain">
+      
+      <div id="vote-form">
+
+        <div class="control-group">
+          <label class="control-label" for="third"><h2>Your Name:</h2></label>
+          <div class="controls">
+            <input type="text" class="input" name="votername" id="votername" value="" placeholder="Your Name" />
+          </div>
         </div>
+
+        <div class="control-group">
+          <label class="control-label" for="first"><h2>1st Place</h2></label>
+          <div class="controls">
+            <select name="first_place" id="first" class="span3 teams_select">
+              <option>Select A Team</option>
+              <%#teams%>
+                <option value="<%name%>"><%name%></option>
+              <%/teams%>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="second"><h2>2nd Place</h2></label>
+          <div class="controls">
+            <select name="second_place" id="second" class="span3 teams_select">
+              <option>Select A Team</option>
+              <%#teams%>
+                <option value="<%name%>"><%name%></option>
+              <%/teams%>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label class="control-label" for="third"><h2>3rd Place</h2></label>
+          <div class="controls">
+            <select name="third_place" id="third" class="span3 teams_select">
+              <option>Select A Team</option>
+              <%#teams%>
+                <option value="<%name%>"><%name%></option>
+              <%/teams%>
+            </select>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="controls">
+            <button class="btn btn-primary btn-large" id="votebutton">VOTE !</button>
+            <p style="padding-top:15px;"><a href="#" onClick="$('#vote-form-container').hide();$('#results-container').show();return false;">Show Results</a></p>
+          </div>
+        </div>
+
       </div>
 
-      <div class="control-group">
-        <label class="control-label" for="first"><h2>1st Place</h2></label>
-        <div class="controls">
-          <select name="first_place" id="first" class="span3 teams_select">
-            <option>Select A Team</option>
-            <%#teams%>
-              <option value="<%name%>"><%name%></option>
-            <%/teams%>
-          </select>
-        </div>
-      </div>
+    </script>  
 
-      <div class="control-group">
-        <label class="control-label" for="second"><h2>2nd Place</h2></label>
-        <div class="controls">
-          <select name="second_place" id="second" class="span3 teams_select">
-            <option>Select A Team</option>
-            <%#teams%>
-              <option value="<%name%>"><%name%></option>
-            <%/teams%>
-          </select>
-        </div>
-      </div>
+    <script id="results-template" type="text/plain">
 
-      <div class="control-group">
-        <label class="control-label" for="third"><h2>3rd Place</h2></label>
-        <div class="controls">
-          <select name="third_place" id="third" class="span3 teams_select">
-            <option>Select A Team</option>
-            <%#teams%>
-              <option value="<%name%>"><%name%></option>
-            <%/teams%>
-          </select>
-        </div>
-      </div>
+      <table id="results" class="table striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Result</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        <%#teams%>
+          <tr>
+            <td width="20%"><%name%></td>
+            <td width="70%">
+              <div class="progress progress-success progress-striped active">
+                <div class="bar" style="width: <%score%>%;"></div>
+              </div>
+            </td>
+            <td width="10%"><%score%>%</td>
+          </tr>
+        <%/teams%>
+        </tbody>
+      </table>
 
-      <div class="control-group">
-        <div class="controls">
-          <button class="btn btn-primary btn-large" id="votebutton">VOTE !</button>
-        </div>
-      </div>
+    </script>
 
-    </div>
-
-  </script>  
-
-  <script id="results-template" type="text/plain">
-
-    <table id="results" class="table striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Result</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      <%#teams%>
-        <tr>
-          <td width="20%"><%name%></td>
-          <td width="70%">
-            <div class="progress progress-success progress-striped active">
-              <div class="bar" style="width: <%score%>%;"></div>
-            </div>
-          </td>
-          <td width="10%"><%score%>%</td>
-        </tr>
-      <%/teams%>
-      </tbody>
-    </table>
-
-  </script>
-
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
-  <script src="/js/bootstrap.js" type="text/javascript"></script>
-  <script src="/js/mustache.js" type="text/javascript"></script>
-  <script src="/socket.io/socket.io.js" type="text/javascript"></script>    
-  <script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.js" type="text/javascript"></script>
+    <script src="/js/mustache.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>    
+    <script>
 
 
-    Mustache.tags = ['<%','%>'];
-  
-    // Write the Voting Form
-    function write_vote_form( teams ){
+      Mustache.tags = ['<%','%>'];
+    
+      // Write the Voting Form
+      function write_vote_form( teams ){
 
-      var voteformtemplate = $('#vote-form-template').html();
-      var $partial = $(Mustache.render(voteformtemplate, {
-        teams: teams
-      }));
-      $partial.find('#votebutton').click(function (e) {
-        e.preventDefault();
-        vote();
-      });
-      $('#vote-form-container').html($partial);
-    }
+        var voteformtemplate = $('#vote-form-template').html();
+        var $partial = $(Mustache.render(voteformtemplate, {
+          teams: teams
+        }));
+        $partial.find('#votebutton').click(function (e) {
+          e.preventDefault();
+          vote();
+        });
+        $('#vote-form-container').html($partial);
+      }
 
-    // Write the Results
-    function write_results( teams ){
+      // Write the Results
+      function write_results( teams ){
 
-      var resultstemplate = $('#results-template').html();
-      $('#results-container').html(Mustache.render(resultstemplate, {
-        teams: teams
-      }));
+        var resultstemplate = $('#results-template').html();
+        $('#results-container').html(Mustache.render(resultstemplate, {
+          teams: teams
+        }));
 
-    }
+      }
 
-    //Accept a Vote
-    function vote(){
+      //Accept a Vote
+      function vote(){
 
-      var form = {};
+        var form = {};
         form.name  = $('#votername').val();
         form.first  = $('#first').val();
         form.second = $('#second').val();
         form.third  = $('#third').val();
-      
-      console.log(form);
 
-      socket.emit('user:vote', form);
+        socket.emit('user:vote', form);
 
-    }
+        $('#vote-form-container').hide();
+        $('#results-container').show();
 
-    //Initial Teams coming from Page Load
-    var teams = {{{teams}}};
-    /*
-    var teams = [
-      {
-        name: "test1",
-        score: 33
-      },
-      {
-        name: "test2",
-        score: 33
-      },
-      {
-        name: "test3",
-        score: 33
       }
-    ];
-    */
 
-    // Init the page
-    write_vote_form( teams );
-    write_results( teams );
+      //Initial Teams coming from Page Load
+      var teams = {{{teams}}};
+      /*
+      var teams = [
+        {
+          name: "test1",
+          score: 33
+        },
+        {
+          name: "test2",
+          score: 33
+        },
+        {
+          name: "test3",
+          score: 33
+        }
+      ];
+      */
+
+      // Init the page
+      write_vote_form( teams );
+      write_results( teams );
 
 
-  </script>
+    </script>
 
-  <script>
+    <script>
 
-    //Connect to Socket IO Server
-    var socket = io.connect('http://wopr-jr.local:3333');
+      //Connect to Socket IO Server
+      var socket = io.connect('http://wopr-jr.local:3333');
 
-    // Listen for updates to the Team Scores
-    socket.on('team:scores', function (data) {
-      console.log(data);
-      write_results( data );
-    });
+      // Listen for updates to the Team Scores
+      socket.on('team:scores', function (data) {
+        console.log(data);
+        write_results( data );
+      });
 
-    // Listen for changes to list of teams
-    socket.on('team:list', function (data) {
-      console.log(data);
-      write_vote_form( data );
-    });
+      // Listen for changes to list of teams
+      socket.on('team:list', function (data) {
+        console.log(data);
+        write_vote_form( data );
+      });
 
-  </script>
-
+    </script>
+</body>
 </html>
