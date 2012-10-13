@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><% title %></title>
+    <title>Desert JS Voting System</title>
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">    
     <link rel='stylesheet' href='/css/style.css' />
@@ -28,7 +28,7 @@
           <select name="first_place" id="first" class="span3 teams_select">
             <option>Select A Team</option>
             <%#teams%>
-              <option value="<%.%>"><%.%></option>
+              <option value="<%name%>"><%name%></option>
             <%/teams%>
           </select>
         </div>
@@ -40,7 +40,7 @@
           <select name="second_place" id="second" class="span3 teams_select">
             <option>Select A Team</option>
             <%#teams%>
-              <option value="<%.%>"><%.%></option>
+              <option value="<%name%>"><%name%></option>
             <%/teams%>
           </select>
         </div>
@@ -52,7 +52,7 @@
           <select name="third_place" id="third" class="span3 teams_select">
             <option>Select A Team</option>
             <%#teams%>
-              <option value="<%.%>"><%.%></option>
+              <option value="<%name%>"><%name%></option>
             <%/teams%>
           </select>
         </div>
@@ -68,8 +68,31 @@
 
   </script>  
 
-  <script id="foo" type="text/plain">
-    <h1>hello <%name%></h1>
+  <script id="results-template" type="text/plain">
+
+    <table id="results" class="table striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Result</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%#teams%>
+        <tr>
+          <td width="20%"><%name%></td>
+          <td width="70%">
+            <div class="progress progress-success progress-striped active">
+              <div class="bar" style="width: <%score%>%;"></div>
+            </div>
+          </td>
+          <td width="10%"><%score%>%</td>
+        </tr>
+      <%/teams%>
+      </tbody>
+    </table>
+
   </script>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
@@ -78,13 +101,33 @@
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>    
   <script>
 
-    var teams = {{{teams}}};
+    //var teams = {{{teams}}};
+    var teams = [
+      {
+        name: "test1",
+        score: 33
+      },
+      {
+        name: "test2",
+        score: 33
+      },
+      {
+        name: "test3",
+        score: 33
+      }
+    ];
 
     Mustache.tags = ['<%','%>'];
   
-    var template = $('#vote-form-template').html();
-    $('body').append(Mustache.render(template, {
+    var voteformtemplate = $('#vote-form-template').html();
+    $('body').append(Mustache.render(voteformtemplate, {
       teams: teams
     }));
+
+    var resultstemplate = $('#results-template').html();
+    $('body').append(Mustache.render(resultstemplate, {
+      teams: teams
+    }));    
+
   </script>
 </html>
