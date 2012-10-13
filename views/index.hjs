@@ -147,8 +147,8 @@
       //Log a vote
       function log_vote( vote ){
 
-        $('#vote_log_rows').append(
-            "<tr><td>" + vote.name + "</td><td>" + vote.first + "<td></td>" + vote.second + "<td></td>" + vote.third + "</td>td></tr>";
+        $('#vote_log_rows').prepend(
+            "<tr><td>" + vote.name + "</td><td>" + vote.first + "</td><td>" + vote.second + "</td><td>" + vote.third + "</td></tr>"
           );
 
       }
@@ -202,19 +202,16 @@
 
       // Listen for updates to the Team Scores
       socket.on('team:scores', function (data) {
-        console.log(data);
         write_results( data );
       });
 
       // Listen for changes to list of teams
       socket.on('team:list', function (data) {
-        console.log(data);
         write_vote_form( data );
       });
 
        // Listen for changes to list of teams
       socket.on('vote:feed', function (vote) {
-        console.log(vote);
         log_vote( vote );
       });
 
