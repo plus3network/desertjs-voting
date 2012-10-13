@@ -49,6 +49,8 @@ var io = socketio.listen(server);
 
 io.sockets.on('user:vote', function (data) {
   var tasks = [];
+
+  console.log(data);
   
   tasks.push(function (cb) {
     voting.vote(data.name, data.first, data.second, data.thrid, cb);
