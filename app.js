@@ -10,6 +10,7 @@ var path     = require('path');
 var socketio = require('socket.io');
 var async    = require('async');
 var redis    = require('redis').createClient();
+var _        = require('underscore');
 var voting   = require('./voting');
 
 var app = express();
@@ -33,7 +34,9 @@ app.configure('development', function(){
 
 app.get('/', function(req, res){
   voting.getTeams(function (err, teams) {
-    res.render('index', { teams: JSON.stringify(teams)  });
+    res.render('index', { teams: JSON.stringify(_.map(teams, function (row) { 
+      return { name: row, score: 0 };
+    }))});
   });
 });
 
@@ -56,7 +59,7 @@ io.sockets.on('user:vote', function (data) {
   });
 
   async.series(tasks, function (err, results) {
-    io.sockets.emit('team:scores', voting.joinEveryOther(results[1]));
+    io.sockets.emit('team:scores', results[1]);
     io.sockets.emit('vote:feed', data);
   });
 
