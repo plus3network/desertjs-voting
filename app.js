@@ -46,23 +46,24 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 });
 
 var io = socketio.listen(server);
+io.sockets.on('connection', function (socket) {
+  socket.on('user:vote', function (data) {
+    var tasks = [];
 
-io.sockets.on('user:vote', function (data) {
-  var tasks = [];
+    console.log(data);
+    
+    tasks.push(function (cb) {
+      voting.vote(data.name, data.first, data.second, data.thrid, cb);
+    });
 
-  console.log(data);
-  
-  tasks.push(function (cb) {
-    voting.vote(data.name, data.first, data.second, data.thrid, cb);
+    tasks.push(function (cb) {
+      voting.getScores(cb);
+    });
+
+    async.series(tasks, function (err, results) {
+      socket.emit('team:scores', results[1]);
+      socket.emit('vote:feed', data);
+    });
+
   });
-
-  tasks.push(function (cb) {
-    voting.getScores(cb);
-  });
-
-  async.series(tasks, function (err, results) {
-    io.sockets.emit('team:scores', results[1]);
-    io.sockets.emit('vote:feed', data);
-  });
-
 });

@@ -170,7 +170,7 @@
   <script>
 
     //Connect to Socket IO Server
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://wopr-jr.local:3333');
 
     // Listen for updates to the Team Scores
     socket.on('team:scores', function (data) {
