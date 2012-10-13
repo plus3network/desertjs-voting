@@ -4,7 +4,6 @@
  */
 
 var express  = require('express');
-var routes   = require('./routes');
 var user     = require('./routes/user');
 var http     = require('http');
 var path     = require('path');
@@ -34,7 +33,7 @@ app.configure('development', function(){
 
 app.get('/', function(req, res){
   voting.getTeams(function (err, teams) {
-    res.render('index', { teams: teams  });
+    res.render('index', { teams: JSON.stringify(teams)  });
   });
 });
 
