@@ -11,6 +11,10 @@
     <h1>Desert JS Voting System</h1>
   </body>
 
+  <div id="vote-form-container"></div>
+
+  <div id="results-container"></div>
+
   <script id="vote-form-template" type="text/plain">
     
     <div id="vote-form">
@@ -115,16 +119,17 @@
         e.preventDefault();
         vote();
       });
-      $('body').append($partial);
+      $('#vote-form-container').html($partial);
     }
 
     // Write the Results
     function write_results( teams ){
 
       var resultstemplate = $('#results-template').html();
-      $('body').append(Mustache.render(resultstemplate, {
+      $('#results-container').html(Mustache.render(resultstemplate, {
         teams: teams
-      })); 
+      }));
+
     }
 
     //Accept a Vote
@@ -164,6 +169,7 @@
     // Init the page
     write_vote_form( teams );
     write_results( teams );
+
 
   </script>
 
