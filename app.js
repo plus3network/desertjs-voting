@@ -33,10 +33,8 @@ app.configure('development', function(){
 });
 
 app.get('/', function(req, res){
-  voting.getTeams(function (err, teams) {
-    res.render('index', { teams: JSON.stringify(_.map(teams, function (row) { 
-      return { name: row, score: 0 };
-    }))});
+  voting.getScores(function (err, teams) {
+    res.render('index', { teams: JSON.stringify(teams)});
   });
 });
 
@@ -53,7 +51,7 @@ io.sockets.on('connection', function (socket) {
     console.log(data);
     
     tasks.push(function (cb) {
-      voting.vote(data.name, data.first, data.second, data.thrid, cb);
+      voting.vote(data.name, data.first, data.second, data.third, cb);
     });
 
     tasks.push(function (cb) {

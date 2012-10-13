@@ -38,7 +38,10 @@ var joinEveryOther = module.exports.joinEveryOther = function (value) {
 };
 
 module.exports.createTeam = function (name, callback) {
-  redis.sadd('teams', name, callback);
+  redis.multi()
+  .zincrby('results', 0, name)
+  .sadd('teams', name)
+  .exec(callback);
 };
 
 module.exports.getTeams = function (callback) {
@@ -54,7 +57,7 @@ module.exports.getScores = function (callback) {
     }, 0);
 
     callback(null, _.map(joinEveryOther(results), function (row) {
-      return { name: row[0], score: (parseInt(row[1])/total)*100 };
+      return { name: row[0], score: Math.round((parseInt(row[1])/total)*100) };
     }));
   });
 };
