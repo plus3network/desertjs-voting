@@ -11,6 +11,7 @@ var path     = require('path');
 var socketio = require('socket.io');
 var async    = require('async');
 var redis    = require('redis').createClient();
+var voting   = require('./voting');
 
 var app = express();
 
@@ -31,8 +32,11 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/', function(req, res){
+  voting.getTeams(function (err, teams) {
+    res.render('index', { teams: teams  });
+  });
+});
 
 
 var server = http.createServer(app).listen(app.get('port'), function(){
@@ -42,5 +46,19 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = socketio.listen(server);
 
 io.sockets.on('user:vote', function (data) {
+  var tasks = [];
+  
+  tasks.push(function (cb) {
+    voting.vote(data.name, data.first, data.second, data.thrid, cb);
+  });
+
+  tasks.push(function (cb) {
+    voting.getScores(cb);
+  });
+
+  async.series(tasks, function (err, results) {
+    io.sockets.emit('team:scores', voting.joinEveryOther(results[1]));
+    io.sockets.emit('vote:feed', data);
+  });
 
 });

@@ -26,6 +26,15 @@ module.exports.vote = function (name, first, second, third, callback) {
     });
 };
 
+module.exports.joinEveryOther = function (value) {
+  var results = [];
+  var i = 0;
+  while (i < value.length) {
+    results.push([value[i], value[i + 1]]);
+    i += 2;
+  }
+  return results;
+};
 
 module.exports.createTeam = function (name, callback) {
   redis.sadd('teams', name, callback);
@@ -33,4 +42,8 @@ module.exports.createTeam = function (name, callback) {
 
 module.exports.getTeams = function (callback) {
   redis.smembers('teams', callback);
+};
+
+module.exports.getScores = function (callback) {
+  redis.zrevrange('results', 0, -1, 'WITHSCORES', callback);
 };

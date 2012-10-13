@@ -5,7 +5,7 @@
 
 exports.index = function(req, res){
   res.render('index', {
-    title: 'DesertJS Voting System',
-    name: "test"
+    title: 'DesertJS Voting System'
   });
 };
+
