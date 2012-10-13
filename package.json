@@ -1,7 +1,12 @@
 {
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
   "dependencies": {
-    "redis": "~0.8.1",
-    "express": "~3.0.0rc5",
-    "socket.io": "~0.9.10"
+    "express": "3.0.0rc5",
+    "jade": "*"
   }
 }
