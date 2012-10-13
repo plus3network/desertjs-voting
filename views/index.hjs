@@ -96,6 +96,7 @@
         </tbody>
       </table>
 
+      <h4>Live Voting Results</h4>
       <table id="votes" class="table striped">
         <thead>
           <tr>
