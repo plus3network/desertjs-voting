@@ -96,6 +96,7 @@
         </tbody>
       </table>
 
+      <h4>Live Voting Results</h4>
       <table id="votes" class="table striped">
         <thead>
           <tr>
@@ -148,7 +149,7 @@
       function log_vote( vote ){
 
         $('#vote_log_rows').append(
-            "<tr><td>" + vote.name + "</td><td>" + vote.first + "<td></td>" + vote.second + "<td></td>" + vote.third + "</td>td></tr>";
+            "<tr><td>" + vote.name + "</td><td>" + vote.first + "<td></td>" + vote.second + "<td></td>" + vote.third + "</td>td></tr>"
           );
 
       }
