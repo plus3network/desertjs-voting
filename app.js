@@ -59,6 +59,11 @@ io.sockets.on('connection', function (socket) {
     });
 
     async.series(tasks, function (err, results) {
+      if (err) {
+        return console.log(err);
+      }
+      socket.emit('team:scores', results[1]);
+      socket.emit('vote:feed', data);
       socket.broadcast.emit('team:scores', results[1]);
       socket.broadcast.emit('vote:feed', data);
     });
